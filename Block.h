@@ -22,6 +22,10 @@ public:
     VertexArray& getShape();
 
     void BlockShape(RectangleShape *rectangles, BlockType type);
+
+    Vector2f getPosition();
+
+    void update(Time dt);
 };
 
 

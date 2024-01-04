@@ -4,6 +4,7 @@
 
 #include "Block.h"
 
+#define BLOCKSPEED 300.0
 #define BLOCKSIZE 50
 
 Block::Block(float startX, float startY, BlockType blockType) {
@@ -62,5 +63,27 @@ void Block::BlockShape(RectangleShape* rectangles, BlockType type) {
             break;
         //case OShape:
 
+    }
+}
+
+Vector2f Block::getPosition() {
+    return position;
+}
+
+// update block position on screen
+void Block::update(Time dt) {
+    Vector2f newPos;
+    //newPos.x = position.x;
+    //newPos.y += position.y + BLOCKSPEED * dt.asSeconds();
+    position.y += BLOCKSPEED * dt.asSeconds();
+    for (int i = 0; i < 4; i++) {
+        rectangles[i].setPosition(position + Vector2f(0, i * BLOCKSIZE));
+    }
+
+    for (int i = 0; i < 4; i++) {
+        shapeVertexArray[i * 4 + 0].position = rectangles[i].getTransform().transformPoint(rectangles[i].getPoint(0));
+        shapeVertexArray[i * 4 + 1].position = rectangles[i].getTransform().transformPoint(rectangles[i].getPoint(1));
+        shapeVertexArray[i * 4 + 2].position = rectangles[i].getTransform().transformPoint(rectangles[i].getPoint(2));
+        shapeVertexArray[i * 4 + 3].position = rectangles[i].getTransform().transformPoint(rectangles[i].getPoint(3));
     }
 }

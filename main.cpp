@@ -15,13 +15,29 @@ int main() {
 
     //JShape jShape(150, 200);
     //RectangleShape* jShapeRecs = jShape.getShape();
+    Vector2f position;
+
+    bool floatingDown = true;
+
+    Clock clock;
 
     while (window.isOpen()) {
+        position = iShape.getPosition();
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
+        }
+
+
+        if (position.y + 200 > window.getSize().y) {
+            floatingDown = false;
+        }
+
+        Time dt = clock.restart();
+        if (floatingDown) {
+            iShape.update(dt);
         }
 
         window.clear();
@@ -33,9 +49,9 @@ int main() {
 //            window.draw(jShapeRecs[i]);
 //        }
         window.draw(iShape.getShape());
-        window.draw(jShape.getShape());
-        window.draw(jShape2.getShape());
-        window.draw(lShape.getShape());
+//        window.draw(jShape.getShape());
+//        window.draw(jShape2.getShape());
+//        window.draw(lShape.getShape());
         window.display();
     }
 
